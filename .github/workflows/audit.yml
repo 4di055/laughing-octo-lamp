@@ -35,11 +35,6 @@ jobs:
         uses: returntocorp/semgrep-action@v1
         with:
           config: p/r2c
-      # Synk
-      - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/node@master
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       # SonarCloud
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
