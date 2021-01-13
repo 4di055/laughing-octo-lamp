@@ -1,5 +1,7 @@
 name: "Audit"
 on:
+  #pull_request:
+  #  branches: 
   push:
     branches-ignore:
       - main
@@ -23,3 +25,18 @@ jobs:
           languages: ${{ matrix.language }}
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v1
+       # Insider  
+      - name: Run Insider
+        uses: insidersec/insider-action@v0
+        with:
+            technology: javascript
+      # Semgrep
+      - name: Semgrep
+        uses: returntocorp/semgrep-action@v1
+        with:
+          config: p/r2c
+      # Synk
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
