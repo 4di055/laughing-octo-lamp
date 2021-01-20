@@ -56,13 +56,13 @@ jobs:
       #          name: shiftleft-scan-reports
       #          path: reports
       # ApplicationInspector
-      - uses: adioss/ApplicationInspector-Action@master
+      - uses: adioss/ApplicationInspector-Action@adioss
         with:
           output-format: json
 
       ########### LEAKS
       - name: gitleaks-action
-        uses: zricethezav/gitleaks-action@adioss
+        uses: zricethezav/gitleaks-action@master
 
       ########### REPORTS
       - uses: actions/upload-artifact@v2
