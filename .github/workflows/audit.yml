@@ -62,7 +62,7 @@ jobs:
 
       ########### LEAKS
       - name: gitleaks-action
-        uses: zricethezav/gitleaks-action@master
+        uses: zricethezav/gitleaks-action@adioss
 
       ########### REPORTS
       - uses: actions/upload-artifact@v2
