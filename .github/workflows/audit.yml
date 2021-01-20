@@ -18,29 +18,29 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-      # CodeQL
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v1
-        with:
-          languages: ${{ matrix.language }}
-      - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v1
-       # Insider  
+      # CodeQL // ok
+      #      - name: Initialize CodeQL
+      #        uses: github/codeql-action/init@v1
+      #        with:
+      #          languages: ${{ matrix.language }}
+      #      - name: Perform CodeQL Analysis
+      #        uses: github/codeql-action/analyze@v1
+      # Insider
       - name: Run Insider
         uses: insidersec/insider-action@v0
         with:
-            technology: javascript
+          technology: javascript
       # Semgrep
       - name: Semgrep
         uses: returntocorp/semgrep-action@v1
         with:
           config: p/r2c
       # SonarCloud
-      #- name: SonarCloud Scan
-      #  uses: SonarSource/sonarcloud-github-action@master
-      #  env:
-      #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #    SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       # ShiftLeft
       - name: Perform ShiftLeft Scan
         uses: ShiftLeftSecurity/scan-action@master
