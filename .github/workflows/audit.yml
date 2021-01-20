@@ -7,17 +7,18 @@ on:
       - main
     paths:
       - '**.js'
-          
+
 jobs:
   analyze:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        language: ['javascript']        
+        language: [ 'javascript' ]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+      ########### SAST
       # CodeQL // ok
       #      - name: Initialize CodeQL
       #        uses: github/codeql-action/init@v1
@@ -25,32 +26,46 @@ jobs:
       #          languages: ${{ matrix.language }}
       #      - name: Perform CodeQL Analysis
       #        uses: github/codeql-action/analyze@v1
-      # Insider
-      - name: Run Insider
-        uses: insidersec/insider-action@v0
+      # Insider // ok
+      #      - name: Run Insider
+      #        uses: insidersec/insider-action@v0
+      #        with:
+      #          technology: javascript
+      # Semgrep //ok
+      #      - name: Semgrep
+      #        uses: returntocorp/semgrep-action@v1
+      #        with:
+      #          config: p/r2c
+      # SonarCloud // ok
+      #      - name: SonarCloud Scan
+      #        uses: SonarSource/sonarcloud-github-action@master
+      #        env:
+      #          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      # ShiftLeft // ok
+      #      - name: Perform ShiftLeft Scan
+      #        uses: ShiftLeftSecurity/scan-action@master
+      #        env:
+      #          WORKSPACE: ""
+      #          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #        with:
+      #          output: reports
+      #      - name: Upload scan reports
+      #        uses: actions/upload-artifact@v1.0.0
+      #        with:
+      #          name: shiftleft-scan-reports
+      #          path: reports
+      # ApplicationInspector
+      - uses: microsoft/ApplicationInspector-Action@v1
         with:
-          technology: javascript
-      # Semgrep
-      - name: Semgrep
-        uses: returntocorp/semgrep-action@v1
+          output-format: json
+
+      ########### LEAKS
+      - name: gitleaks-action
+        uses: zricethezav/gitleaks-action@master
+
+      ########### REPORTS
+      - uses: actions/upload-artifact@v2
         with:
-          config: p/r2c
-      # SonarCloud
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      # ShiftLeft
-      - name: Perform ShiftLeft Scan
-        uses: ShiftLeftSecurity/scan-action@master
-        env:
-          WORKSPACE: ""
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          output: reports
-      - name: Upload scan reports
-        uses: actions/upload-artifact@v1.0.0
-        with:
-          name: shiftleft-scan-reports
-          path: reports
+          name: AppInspectorResults
+          path: AppInspectorResults.json
