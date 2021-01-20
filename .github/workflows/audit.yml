@@ -56,7 +56,7 @@ jobs:
       #          name: shiftleft-scan-reports
       #          path: reports
       # ApplicationInspector
-      - uses: microsoft/ApplicationInspector-Action@v1
+      - uses: adioss/ApplicationInspector-Action@master
         with:
           output-format: json
 
