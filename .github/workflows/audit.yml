@@ -20,41 +20,41 @@ jobs:
         uses: actions/checkout@v2
       ########### SAST
       # CodeQL // ok
-      #      - name: Initialize CodeQL
-      #        uses: github/codeql-action/init@v1
-      #        with:
-      #          languages: ${{ matrix.language }}
-      #      - name: Perform CodeQL Analysis
-      #        uses: github/codeql-action/analyze@v1
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v1
+        with:
+          languages: ${{ matrix.language }}
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v1
       # Insider // ok
-      #      - name: Run Insider
-      #        uses: insidersec/insider-action@v0
-      #        with:
-      #          technology: javascript
+      - name: Run Insider
+        uses: insidersec/insider-action@v0
+        with:
+          technology: javascript
       # Semgrep //ok
-      #      - name: Semgrep
-      #        uses: returntocorp/semgrep-action@v1
-      #        with:
-      #          config: p/r2c
+      - name: Semgrep
+        uses: returntocorp/semgrep-action@v1
+        with:
+          config: p/r2c
       # SonarCloud // ok
-      #      - name: SonarCloud Scan
-      #        uses: SonarSource/sonarcloud-github-action@master
-      #        env:
-      #          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       # ShiftLeft // ok
-      #      - name: Perform ShiftLeft Scan
-      #        uses: ShiftLeftSecurity/scan-action@master
-      #        env:
-      #          WORKSPACE: ""
-      #          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #        with:
-      #          output: reports
-      #      - name: Upload scan reports
-      #        uses: actions/upload-artifact@v1.0.0
-      #        with:
-      #          name: shiftleft-scan-reports
-      #          path: reports
+      - name: Perform ShiftLeft Scan
+        uses: ShiftLeftSecurity/scan-action@master
+        env:
+          WORKSPACE: ""
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          output: reports
+      - name: Upload scan reports
+        uses: actions/upload-artifact@v1.0.0
+        with:
+          name: shiftleft-scan-reports
+          path: reports
       # ApplicationInspector
       - uses: adioss/ApplicationInspector-Action@adioss
         with:
