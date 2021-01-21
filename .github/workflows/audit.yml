@@ -50,11 +50,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           output: reports
-      - name: Upload scan reports
-        uses: actions/upload-artifact@v1.0.0
-        with:
-          name: shiftleft-scan-reports
-          path: reports
       # ApplicationInspector
       - uses: adioss/ApplicationInspector-Action@adioss
         with:
@@ -64,8 +59,10 @@ jobs:
       - name: gitleaks-action
         uses: zricethezav/gitleaks-action@master
 
-      ########### REPORTS
+      ########### RESULTS
       - uses: actions/upload-artifact@v2
         with:
-          name: AppInspectorResults
-          path: AppInspectorResults.json
+          name: results
+          path: |
+            AppInspectorResults.json
+            reports
